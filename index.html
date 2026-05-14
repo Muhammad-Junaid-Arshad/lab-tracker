@@ -8,381 +8,249 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
-  /* QPL brand colours */
   --navy:    #1a2744;
   --navy2:   #243154;
   --orange:  #e87c1e;
   --orange2: #f59340;
   --gold:    #f0a830;
-
-  /* UI */
   --bg:      #f4f5f7;
   --white:   #ffffff;
-  --card:    #ffffff;
   --border:  #e2e5eb;
   --border2: #cdd1da;
   --text:    #1a2744;
   --body:    #3d4a63;
   --muted:   #6b7a99;
   --muted2:  #a0aec0;
-
-  /* Status colours */
-  --green:   #1a9e6b;
-  --green-bg:#e8f7f2;
-  --red:     #d63b50;
-  --red-bg:  #fceef0;
-  --amber:   #d48a10;
-  --amber-bg:#fef3e0;
-  --warn:    #c05820;
-  --warn-bg: #fde8d8;
-
+  --green:   #1a9e6b;  --green-bg: #e8f7f2;
+  --red:     #d63b50;  --red-bg:   #fceef0;
+  --amber:   #d48a10;  --amber-bg: #fef3e0;
+  --warn:    #c05820;  --warn-bg:  #fde8d8;
   --mono: 'DM Mono', monospace;
   --sans: 'Inter', sans-serif;
   --radius: 8px;
-  --shadow: 0 1px 3px rgba(26,39,68,0.08), 0 4px 12px rgba(26,39,68,0.05);
-  --shadow-sm: 0 1px 2px rgba(26,39,68,0.06);
+  --shadow-sm: 0 1px 3px rgba(26,39,68,0.08);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-/* ══ HEADER ══════════════════════════════ */
-.header {
-  background: var(--navy);
-  position: sticky; top: 0; z-index: 50;
-  box-shadow: 0 2px 12px rgba(26,39,68,0.25);
-}
-.header-inner {
-  max-width: 580px; margin: 0 auto; padding: 0 16px;
-  display: flex; align-items: center; gap: 12px; height: 56px;
-}
-.header-logo {
-  height: 34px; width: auto; flex-shrink: 0;
-  filter: brightness(0) invert(1);
-  opacity: 0.95;
-}
-.header-divider {
-  width: 1px; height: 22px; background: rgba(255,255,255,0.2); flex-shrink: 0;
-}
+/* HEADER */
+.header { background: var(--navy); position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 12px rgba(26,39,68,0.25); }
+.header-inner { max-width: 580px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 12px; height: 56px; }
+.header-logo { height: 32px; width: auto; flex-shrink: 0; filter: brightness(0) invert(1); opacity: 0.92; }
+.header-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
 .header-text { flex: 1; min-width: 0; }
-.header-title {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
-  color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.header-sub {
-  font-family: var(--mono); font-size: 10px;
-  color: rgba(255,255,255,0.5); margin-top: 1px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+.header-title { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.header-sub { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.settings-btn {
-  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 6px; padding: 5px 9px; cursor: pointer; color: rgba(255,255,255,0.7);
-  font-size: 13px; transition: all 0.15s; line-height: 1;
-}
+.settings-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 5px 9px; cursor: pointer; color: rgba(255,255,255,0.6); font-size: 13px; transition: all 0.15s; }
 .settings-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
-.live-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--muted2); transition: background 0.3s;
-}
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted2); transition: background 0.3s; }
 .live-dot.on { background: #4de8a8; box-shadow: 0 0 6px #4de8a8; }
 
-/* ══ SETUP MODAL ══════════════════════════ */
-#setup-overlay {
-  display: none; position: fixed; inset: 0; z-index: 200;
-  background: rgba(26,39,68,0.7); backdrop-filter: blur(6px);
-  align-items: center; justify-content: center; padding: 20px;
-}
+/* SETUP MODAL */
+#setup-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(26,39,68,0.7); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 20px; }
 #setup-overlay.show { display: flex; }
-.setup-modal {
-  background: var(--white); border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(26,39,68,0.3);
-  width: 100%; max-width: 400px; overflow: hidden;
-  animation: fadeUp 0.2s ease;
-}
-.setup-modal-head {
-  background: var(--navy); padding: 20px 24px;
-  display: flex; align-items: center; gap: 12px;
-}
-.setup-modal-head img { height: 28px; filter: brightness(0) invert(1); opacity: 0.9; }
-.setup-modal-head h2 { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.03em; }
-.setup-modal-body { padding: 24px; }
-.setup-modal-body p { font-size: 13px; color: var(--body); line-height: 1.65; margin-bottom: 18px; }
+.setup-modal { background: var(--white); border-radius: 12px; box-shadow: 0 20px 60px rgba(26,39,68,0.3); width: 100%; max-width: 400px; overflow: hidden; animation: fadeUp 0.2s ease; }
+.setup-modal-head { background: var(--navy); padding: 18px 24px; display: flex; align-items: center; gap: 12px; }
+.setup-modal-head img { height: 26px; filter: brightness(0) invert(1); opacity: 0.9; }
+.setup-modal-head h2 { font-size: 13px; font-weight: 700; color: #fff; }
+.setup-modal-body { padding: 22px 24px; }
+.setup-modal-body p { font-size: 13px; color: var(--body); line-height: 1.65; margin-bottom: 16px; }
 .setup-modal-body p a { color: var(--orange); text-decoration: none; font-weight: 500; }
 .sf { margin-bottom: 14px; }
 .sf label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-.sf input {
-  width: 100%; background: var(--bg); border: 1.5px solid var(--border2);
-  border-radius: 6px; color: var(--text); font-family: var(--mono);
-  font-size: 12px; padding: 10px 12px; outline: none; transition: border-color 0.15s;
-}
+.sf input { width: 100%; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 6px; color: var(--text); font-family: var(--mono); font-size: 12px; padding: 10px 12px; outline: none; transition: border-color 0.15s; -webkit-appearance: none; }
 .sf input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(232,124,30,0.12); }
 .sf input::placeholder { color: var(--muted2); }
 .sf-hint { margin-top: 5px; font-size: 11px; color: var(--muted); line-height: 1.6; }
 .sf-hint a { color: var(--orange); text-decoration: none; }
-.setup-save-btn {
-  width: 100%; padding: 12px; background: var(--orange);
-  border: none; border-radius: 7px; color: #fff;
-  font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
-  cursor: pointer; transition: background 0.15s; margin-top: 4px;
-}
+.setup-save-btn { width: 100%; padding: 12px; background: var(--orange); border: none; border-radius: 7px; color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; transition: background 0.15s; }
 .setup-save-btn:hover { background: var(--warn); }
-.setup-privacy {
-  margin-top: 14px; padding: 10px 12px;
-  background: var(--green-bg); border-radius: 6px;
-  font-size: 11px; color: var(--green); line-height: 1.7;
-  border: 1px solid rgba(26,158,107,0.2);
-}
+.setup-privacy { margin-top: 12px; padding: 10px 12px; background: var(--green-bg); border-radius: 6px; font-size: 11px; color: var(--green); line-height: 1.7; border: 1px solid rgba(26,158,107,0.2); }
 
-/* ══ STATUS CARD ══════════════════════════ */
+/* STATUS CARD */
 .outer { max-width: 580px; margin: 0 auto; padding: 14px 16px 0; }
-
-.status-card {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: var(--radius); box-shadow: var(--shadow-sm);
-  overflow: hidden; margin-bottom: 12px;
-}
-.status-card-head {
-  padding: 9px 14px; background: var(--navy);
-  display: flex; align-items: center; gap: 6px;
-}
-.status-card-head-label {
-  font-family: var(--mono); font-size: 9px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: rgba(255,255,255,0.5); flex: 1;
-}
+.status-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 12px; }
+.status-card-head { padding: 9px 14px; background: var(--navy); display: flex; align-items: center; }
+.status-card-head-label { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); flex: 1; }
 .status-card-head-label span { color: var(--orange2); }
-.status-body {
-  padding: 12px 14px; font-family: var(--mono);
-  font-size: 11px; color: var(--muted); line-height: 2.1;
-}
+.status-body { padding: 12px 14px; font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 2.1; }
 .sval { color: var(--navy); font-weight: 600; font-family: var(--sans); font-size: 12px; }
 .snone { color: var(--muted2); font-style: italic; font-family: var(--sans); font-size: 12px; }
 .srow { display: flex; gap: 8px; align-items: baseline; }
 .skey { color: var(--muted); min-width: 86px; flex-shrink: 0; font-size: 10px; }
-.cpill {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 2px 9px; border-radius: 20px;
-  font-family: var(--sans); font-size: 11px; font-weight: 600;
-}
-.cp-ok     { background: var(--green-bg); color: var(--green); }
-.cp-minor  { background: var(--amber-bg); color: var(--amber); }
-.cp-major  { background: var(--warn-bg);  color: var(--warn);  }
-.cp-broken { background: var(--red-bg);   color: var(--red);   }
+.cpill { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 20px; font-family: var(--sans); font-size: 11px; font-weight: 600; }
+.cp-ok { background: var(--green-bg); color: var(--green); } .cp-minor { background: var(--amber-bg); color: var(--amber); }
+.cp-major { background: var(--warn-bg); color: var(--warn); } .cp-broken { background: var(--red-bg); color: var(--red); }
 
-/* ══ SECTION CARDS ════════════════════════ */
-.section {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: var(--radius); box-shadow: var(--shadow-sm);
-  overflow: hidden; margin-bottom: 12px;
-  animation: fadeUp 0.3s ease both;
-}
-.section:nth-child(1){animation-delay:.04s}.section:nth-child(2){animation-delay:.08s}
-.section:nth-child(3){animation-delay:.12s}.section:nth-child(4){animation-delay:.16s}
+/* SECTIONS */
+.section { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 12px; animation: fadeUp 0.3s ease both; }
+.section:nth-child(1){animation-delay:.04s}.section:nth-child(2){animation-delay:.08s}.section:nth-child(3){animation-delay:.12s}.section:nth-child(4){animation-delay:.16s}.section:nth-child(5){animation-delay:.20s}
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.sec-head { padding: 9px 14px; background: var(--navy); display: flex; align-items: center; gap: 8px; }
+.sec-num { font-family: var(--mono); font-size: 9px; font-weight: 500; color: var(--orange2); letter-spacing: 0.1em; }
+.sec-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); }
+.sec-badge { margin-left: auto; background: var(--orange); color: #fff; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; letter-spacing: 0.06em; font-family: var(--mono); }
 
-.sec-head {
-  padding: 9px 14px; background: var(--navy);
-  display: flex; align-items: center; gap: 8px;
-}
-.sec-num {
-  font-family: var(--mono); font-size: 9px; font-weight: 500;
-  color: var(--orange2); letter-spacing: 0.1em;
-}
-.sec-title {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.1em; color: rgba(255,255,255,0.7);
-}
-
-/* ══ FIELDS ═══════════════════════════════ */
+/* FIELDS */
 .field { padding: 12px 14px; border-bottom: 1px solid var(--border); }
 .field:last-child { border-bottom: none; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; }
 .field-row .field { border-right: 1px solid var(--border); }
 .field-row .field:last-child { border-right: none; }
+.field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.field-row-3 .field { border-right: 1px solid var(--border); }
+.field-row-3 .field:last-child { border-right: none; }
 
-label {
-  display: block; font-size: 11px; font-weight: 600;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 6px;
-}
+label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 label .req { color: var(--orange); }
 
-input, select, textarea {
-  width: 100%; background: var(--bg); border: 1.5px solid var(--border2);
-  border-radius: 6px; color: var(--text); font-family: var(--sans);
-  font-size: 14px; font-weight: 400; padding: 9px 11px; outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  -webkit-appearance: none; appearance: none;
-}
+input, select, textarea { width: 100%; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 6px; color: var(--text); font-family: var(--sans); font-size: 14px; font-weight: 400; padding: 9px 11px; outline: none; transition: border-color 0.15s, box-shadow 0.15s; -webkit-appearance: none; appearance: none; }
 input::placeholder, textarea::placeholder { color: var(--muted2); }
-input:focus, select:focus, textarea:focus {
-  border-color: var(--orange); box-shadow: 0 0 0 3px rgba(232,124,30,0.1);
-  background: #fff;
-}
-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a99' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 12px center;
-  padding-right: 32px; cursor: pointer; background-color: var(--bg);
-}
+input:focus, select:focus, textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(232,124,30,0.1); background: #fff; }
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a99' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; cursor: pointer; background-color: var(--bg); }
 textarea { resize: vertical; min-height: 72px; line-height: 1.55; }
 input[type="datetime-local"] { font-size: 13px; font-family: var(--mono); color: var(--body); }
-input[type="file"] { padding: 8px; font-size: 12px; color: var(--muted); cursor: pointer; background: var(--bg); }
-input[type="file"]::file-selector-button {
-  background: var(--navy); border: none; color: #fff;
-  padding: 5px 10px; border-radius: 5px; font-family: var(--sans);
-  font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 10px;
-}
+input[type="file"] { padding: 8px; font-size: 12px; color: var(--muted); cursor: pointer; }
+input[type="file"]::file-selector-button { background: var(--navy); border: none; color: #fff; padding: 5px 10px; border-radius: 5px; font-family: var(--sans); font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 10px; }
+input[type="number"] { font-family: var(--mono); }
 
-/* ══ CONDITION GRID ═══════════════════════ */
+/* unit suffix on number fields */
+.input-unit { position: relative; }
+.input-unit input { padding-right: 48px; }
+.input-unit-label { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 11px; color: var(--muted); pointer-events: none; }
+
+/* CONDITION */
 .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.cond-btn {
-  padding: 10px 6px; background: var(--bg);
-  border: 1.5px solid var(--border2); border-radius: 6px;
-  color: var(--muted); font-family: var(--sans); font-size: 12px; font-weight: 600;
-  cursor: pointer; text-align: center; transition: all 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-}
+.cond-btn { padding: 10px 6px; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 6px; color: var(--muted); font-family: var(--sans); font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 5px; }
 .cond-btn:active { transform: scale(0.97); }
-.cond-btn.sel-ok     { border-color: var(--green);  color: var(--green);  background: var(--green-bg); }
-.cond-btn.sel-minor  { border-color: var(--amber);  color: var(--amber);  background: var(--amber-bg); }
-.cond-btn.sel-major  { border-color: var(--warn);   color: var(--warn);   background: var(--warn-bg);  }
-.cond-btn.sel-broken { border-color: var(--red);    color: var(--red);    background: var(--red-bg);   }
+.cond-btn.sel-ok     { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+.cond-btn.sel-minor  { border-color: var(--amber); color: var(--amber); background: var(--amber-bg); }
+.cond-btn.sel-major  { border-color: var(--warn);  color: var(--warn);  background: var(--warn-bg);  }
+.cond-btn.sel-broken { border-color: var(--red);   color: var(--red);   background: var(--red-bg);   }
 #issue-field { display: none; } #issue-field.show { display: block; }
 #photo-field { display: none; } #photo-field.show { display: block; }
 #photo-preview { margin-top: 8px; border-radius: 6px; overflow: hidden; display: none; border: 1px solid var(--border); }
 #photo-preview img { width: 100%; max-height: 200px; object-fit: cover; display: block; }
 
-/* ══ SUBMIT ═══════════════════════════════ */
+/* DEVICE-SPECIFIC FIELDS */
+.device-section { display: none; }
+.device-section.show { display: block; }
+
+/* SUBMIT */
 .submit-wrap { margin-top: 16px; padding-bottom: 40px; }
-#submit-btn {
-  width: 100%; padding: 14px; background: var(--navy);
-  border: none; border-radius: var(--radius); color: #fff;
-  font-size: 14px; font-weight: 700; letter-spacing: 0.04em;
-  cursor: pointer; transition: background 0.15s, transform 0.1s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 2px 8px rgba(26,39,68,0.25);
-}
-#submit-btn:hover { background: var(--navy2); }
-#submit-btn:active { transform: scale(0.99); }
+#submit-btn { width: 100%; padding: 14px; background: var(--navy); border: none; border-radius: var(--radius); color: #fff; font-size: 14px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; transition: background 0.15s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 2px 8px rgba(26,39,68,0.25); }
+#submit-btn:hover { background: var(--navy2); } #submit-btn:active { transform: scale(0.99); }
 #submit-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-#submit-btn.done { background: var(--green); box-shadow: 0 2px 8px rgba(26,158,107,0.3); }
+#submit-btn.done { background: var(--green); }
 
-/* ══ ORANGE ACCENT LINE on submit ═════════ */
-.submit-accent {
-  height: 3px; background: linear-gradient(90deg, var(--orange), var(--gold));
-  border-radius: 0 0 var(--radius) var(--radius); margin-top: -3px;
-  opacity: 0; transition: opacity 0.3s;
-}
-#submit-btn.done + .submit-accent { opacity: 1; }
-
-/* ══ TOAST ════════════════════════════════ */
-#toast {
-  position: fixed; bottom: 24px; left: 50%;
-  transform: translateX(-50%) translateY(12px);
-  background: var(--navy); border-radius: 24px;
-  padding: 11px 22px; font-size: 13px; font-weight: 500;
-  color: #fff; box-shadow: 0 8px 32px rgba(26,39,68,0.3);
-  opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
-  white-space: nowrap; z-index: 300; max-width: calc(100vw - 32px);
-}
+/* TOAST */
+#toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(12px); background: var(--navy); border-radius: 24px; padding: 11px 22px; font-size: 13px; font-weight: 500; color: #fff; box-shadow: 0 8px 32px rgba(26,39,68,0.3); opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; white-space: nowrap; z-index: 300; max-width: calc(100vw - 32px); }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-#toast.ok  { background: var(--green); }
-#toast.err { background: var(--red);   }
+#toast.ok { background: var(--green); } #toast.err { background: var(--red); }
 
-/* ══ SPINNER / PROGRESS ═══════════════════ */
 .spin { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; flex-shrink: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
 #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--gold)); width: 0%; z-index: 999; transition: width 0.4s ease; }
 
-/* ══ FOOTER ═══════════════════════════════ */
-.footer {
-  text-align: center; padding: 20px 16px 32px;
-  font-size: 11px; color: var(--muted2);
-  font-family: var(--mono);
-}
+.footer { text-align: center; padding: 16px 16px 32px; font-size: 11px; color: var(--muted2); font-family: var(--mono); }
 .footer a { color: var(--orange); text-decoration: none; }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════
-  DEVICE CONFIG — safe to be public.
-  No tokens here. Token lives in browser only.
-════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════
+  CONFIG — safe to be public, no tokens here.
+  Token is embedded in QR code URL (?t=...)
+  or entered manually via setup screen.
+═══════════════════════════════════════════ -->
 <script>
 const CONFIG = {
   systemName:    "Lab Equipment Tracker",
   labName:       "Quantum Photonics Laboratory",
   dropboxFolder: "/Lab Equipment Tracker",
 
-  // ── ADD / REMOVE DEVICES HERE ───────────
+  // ── DEVICES ─────────────────────────────────
+  // customFields: optional array of extra fields shown only for this device
   devices: [
-    { id:"EQ-001", name:"Edward's Pumping Station", short:"Pumping Station",   csvFile:"/Lab Equipment Tracker/eq-001-pumping-station.csv" },
-    { id:"EQ-002", name:"Oscilloscope",             short:"Oscilloscope",      csvFile:"/Lab Equipment Tracker/eq-002-oscilloscope.csv"     },
-    { id:"EQ-003", name:"Spectrum Analyser",        short:"Spectrum Analyser", csvFile:"/Lab Equipment Tracker/eq-003-spectrum-analyser.csv" }
-    // { id:"EQ-004", name:"New Device", short:"Short Name", csvFile:"/Lab Equipment Tracker/eq-004-new-device.csv" },
+    {
+      id:      "EQ-001",
+      name:    "Edward's Pumping Station",
+      short:   "Pumping Station",
+      csvFile: "/Lab Equipment Tracker/eq-001-pumping-station.csv",
+      // Extra fields specific to this pump
+      customFields: [
+        { id:"pump-ultimate-pressure", label:"Ultimate Pressure Reached", unit:"mbar", type:"number", placeholder:"e.g. 1e-6" },
+        { id:"pump-time-to-pressure",  label:"Time to Reach Pressure",    unit:"min",  type:"number", placeholder:"e.g. 45"   },
+        { id:"pump-start-pressure",    label:"Starting Pressure",         unit:"mbar", type:"number", placeholder:"e.g. 1e-2" },
+        { id:"pump-notes",             label:"Pump Performance Notes",    unit:"",     type:"textarea",placeholder:"Unusual sounds, vibration, warm-up behaviour…" }
+      ]
+    },
+    {
+      id:      "EQ-002",
+      name:    "Oscilloscope",
+      short:   "Oscilloscope",
+      csvFile: "/Lab Equipment Tracker/eq-002-oscilloscope.csv"
+    },
+    {
+      id:      "EQ-003",
+      name:    "Spectrum Analyser",
+      short:   "Spectrum Analyser",
+      csvFile: "/Lab Equipment Tracker/eq-003-spectrum-analyser.csv"
+    }
+    // Add more devices here:
+    // { id:"EQ-004", name:"Device Name", short:"Short", csvFile:"/Lab Equipment Tracker/eq-004.csv" },
   ],
 
   locations: ["QMF","Bay 1","Bay 2","Bay 3","Bay 4","Bay 5","QHub","Margherita's Lab","DB 2.47","Other (specify below)"],
   purposes:  ["Research","Student Experiment","Teaching / Demo","Calibration / Maintenance","Loan to Another Lab","Testing / QC","Other (describe below)"]
 };
 
-// QPL logo as inline SVG-style data — replace with actual logo URL if hosted
-const QPL_LOGO_URL = "https://www.qpl-hwu.co.uk/images/QPL_logo.png";
+const QPL_LOGO = "https://www.qpl-hwu.co.uk/images/QPL_logo.png";
 </script>
-<!-- ═══════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════ -->
 
 <div id="progress-bar"></div>
 
-<!-- ══ SETUP MODAL ════════════════════════ -->
+<!-- SETUP MODAL -->
 <div id="setup-overlay" class="show">
   <div class="setup-modal">
     <div class="setup-modal-head">
-      <img id="setup-logo" src="" alt="QPL">
+      <img src="" id="setup-logo" alt="QPL">
       <h2>Equipment Tracker — Setup</h2>
     </div>
     <div class="setup-modal-body">
-      <p>
-        Enter your Dropbox access token to connect this tracker to your lab's data folder.
-        The token is saved <strong>only on this device</strong> — it never appears in the
-        code or on GitHub.
-      </p>
+      <p>Enter your Dropbox access token to connect this tracker. It will be saved <strong>only on this device</strong> — never in the code or on GitHub.</p>
       <div class="sf">
         <label>Dropbox Access Token <span style="color:var(--orange)">*</span></label>
         <input type="password" id="setup-token" placeholder="sl.B1xxxxxxxxxxxxxxxx…" autocomplete="off" spellcheck="false">
-        <div class="sf-hint">
-          Get it from <a href="https://www.dropbox.com/developers/apps" target="_blank">dropbox.com/developers/apps</a>
-          → your app → Settings → Generate access token
-        </div>
+        <div class="sf-hint">Get it from <a href="https://www.dropbox.com/developers/apps" target="_blank">dropbox.com/developers/apps</a> → your app → Settings → Generate access token</div>
       </div>
       <button class="setup-save-btn" onclick="saveToken()">Save &amp; Open Tracker →</button>
-      <div class="setup-privacy">
-        🔒 Stored in your browser only · Never in the source code · Never on GitHub<br>
-        Tap ⚙ in the header anytime to update or change it.
-      </div>
+      <div class="setup-privacy">🔒 Stored in your browser only · Never in the source code · Never on GitHub<br>Tap ⚙ in the header anytime to update it.</div>
     </div>
   </div>
 </div>
 
-<!-- ══ HEADER ═════════════════════════════ -->
+<!-- HEADER -->
 <div class="header">
   <div class="header-inner">
     <img class="header-logo" id="header-logo" src="" alt="QPL">
     <div class="header-divider"></div>
     <div class="header-text">
-      <div class="header-title" id="hdr-title">Lab Equipment Tracker</div>
+      <div class="header-title">Lab Equipment Tracker</div>
       <div class="header-sub" id="hdr-device">Quantum Photonics Laboratory · Heriot-Watt</div>
     </div>
     <div class="header-actions">
-      <button class="settings-btn" onclick="showSetup()" title="Update Dropbox token">⚙</button>
+      <button class="settings-btn" onclick="showSetup()" title="Update token">⚙</button>
       <div class="live-dot" id="live-dot"></div>
     </div>
   </div>
 </div>
 
-<!-- ══ MAIN ════════════════════════════════ -->
+<!-- MAIN -->
 <div class="outer">
 
   <!-- Last known status -->
@@ -390,9 +258,7 @@ const QPL_LOGO_URL = "https://www.qpl-hwu.co.uk/images/QPL_logo.png";
     <div class="status-card-head">
       <div class="status-card-head-label"><span>◈</span> Last Known Status</div>
     </div>
-    <div class="status-body" id="status-body">
-      <span class="snone">Loading…</span>
-    </div>
+    <div class="status-body" id="status-body"><span class="snone">Loading…</span></div>
   </div>
 
   <!-- 01 Who & Where -->
@@ -448,13 +314,23 @@ const QPL_LOGO_URL = "https://www.qpl-hwu.co.uk/images/QPL_logo.png";
     </div>
     <div class="field">
       <label>Additional Notes</label>
-      <textarea id="f-notes" placeholder="Accessories taken, settings used, anything else useful…" style="min-height:60px"></textarea>
+      <textarea id="f-notes" placeholder="Accessories taken, settings used, anything else useful…" style="min-height:56px"></textarea>
     </div>
   </div>
 
-  <!-- 04 Condition -->
-  <div class="section">
-    <div class="sec-head"><div class="sec-num">04</div><div class="sec-title">Equipment Condition</div></div>
+  <!-- 04 Device-specific fields (shown only for devices that have customFields) -->
+  <div class="section device-section" id="device-custom-section">
+    <div class="sec-head">
+      <div class="sec-num">04</div>
+      <div class="sec-title" id="device-custom-title">Device Performance</div>
+      <div class="sec-badge" id="device-custom-badge">EQ-001</div>
+    </div>
+    <div id="device-custom-fields"></div>
+  </div>
+
+  <!-- 05 Condition -->
+  <div class="section" id="condition-section">
+    <div class="sec-head"><div class="sec-num" id="cond-num">05</div><div class="sec-title">Equipment Condition</div></div>
     <div class="field">
       <label>Condition when received / collected <span class="req">*</span></label>
       <div class="cond-grid">
@@ -471,19 +347,15 @@ const QPL_LOGO_URL = "https://www.qpl-hwu.co.uk/images/QPL_logo.png";
     <div class="field" id="photo-field">
       <label>Photo of Issue (optional)</label>
       <input type="file" id="f-photo" accept="image/*" capture="environment" onchange="previewPhoto(this)">
-      <div id="photo-preview"><img id="photo-img" src="" alt="Issue photo"></div>
+      <div id="photo-preview"><img id="photo-img" src="" alt=""></div>
     </div>
   </div>
 
-  <!-- Submit -->
   <div class="submit-wrap">
     <button id="submit-btn" onclick="submitLog()">Submit Log Entry</button>
-    <div class="submit-accent"></div>
   </div>
-
 </div>
 
-<!-- Footer -->
 <div class="footer">
   Quantum Photonics Laboratory · Heriot-Watt University ·
   <a href="https://www.qpl-hwu.co.uk/" target="_blank">qpl-hwu.co.uk</a>
@@ -492,19 +364,20 @@ const QPL_LOGO_URL = "https://www.qpl-hwu.co.uk/images/QPL_logo.png";
 <div id="toast"></div>
 
 <script>
-// ════════════════════════════════════
-// LOGO
-// ════════════════════════════════════
-document.getElementById('header-logo').src  = QPL_LOGO_URL;
-document.getElementById('setup-logo').src   = QPL_LOGO_URL;
+// ═══════════════════════════════════
+// LOGOS
+// ═══════════════════════════════════
+document.getElementById('header-logo').src = QPL_LOGO;
+document.getElementById('setup-logo').src  = QPL_LOGO;
 
-// ════════════════════════════════════
-// TOKEN
-// ════════════════════════════════════
+// ═══════════════════════════════════
+// TOKEN — URL param ?t= or manual entry
+// ═══════════════════════════════════
 function getToken()  { return localStorage.getItem('labTrackerToken') || ''; }
+
 function saveToken() {
   const t = document.getElementById('setup-token').value.trim();
-  if (!t || t.length < 10) { alert('Please paste a valid Dropbox token (starts with sl.)'); return; }
+  if (!t || t.length < 10) { alert('Please paste a valid Dropbox token.'); return; }
   localStorage.setItem('labTrackerToken', t);
   document.getElementById('setup-overlay').classList.remove('show');
   toast('Token saved ✓', 'ok');
@@ -515,16 +388,31 @@ function showSetup() {
   document.getElementById('setup-overlay').classList.add('show');
 }
 
-// ════════════════════════════════════
+// ═══════════════════════════════════
 // INIT
-// ════════════════════════════════════
+// ═══════════════════════════════════
 let currentDevice = null;
 let selectedCondition = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   CONFIG.locations.forEach(l => document.getElementById('f-location').insertAdjacentHTML('beforeend',`<option value="${l}">${l}</option>`));
   CONFIG.purposes.forEach(p  => document.getElementById('f-purpose').insertAdjacentHTML('beforeend',`<option value="${p}">${p}</option>`));
-  if (getToken()) { document.getElementById('setup-overlay').classList.remove('show'); init(); }
+
+  // Check URL for token (?t=...) — baked into QR code
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = params.get('t');
+  if (urlToken && urlToken.length > 10) {
+    localStorage.setItem('labTrackerToken', urlToken);
+    // Clean token from visible URL so it's not obvious
+    const cleanUrl = window.location.pathname + (params.get('d') ? '?d='+params.get('d') : '');
+    window.history.replaceState({}, '', cleanUrl);
+  }
+
+  if (getToken()) {
+    document.getElementById('setup-overlay').classList.remove('show');
+    init();
+  }
+  // else setup modal stays visible
 });
 
 function init() {
@@ -544,6 +432,7 @@ function setDevice(dev) {
   currentDevice = dev;
   document.getElementById('hdr-device').textContent = dev.id + ' · ' + dev.name;
   document.title = dev.name + ' — QPL Equipment Log';
+  buildCustomFields(dev);
   loadLastEntry(dev);
 }
 
@@ -571,6 +460,48 @@ function selectDeviceManual(id) {
   if (dev) setDevice(dev);
 }
 
+// ═══════════════════════════════════
+// CUSTOM FIELDS PER DEVICE
+// ═══════════════════════════════════
+function buildCustomFields(dev) {
+  const section = document.getElementById('device-custom-section');
+  const container = document.getElementById('device-custom-fields');
+  const condNum = document.getElementById('cond-num');
+
+  if (!dev.customFields || dev.customFields.length === 0) {
+    section.classList.remove('show');
+    condNum.textContent = '04';
+    return;
+  }
+
+  document.getElementById('device-custom-title').textContent = dev.name + ' — Performance Data';
+  document.getElementById('device-custom-badge').textContent = dev.id;
+  condNum.textContent = '05';
+
+  container.innerHTML = '';
+  dev.customFields.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'field';
+    if (f.type === 'textarea') {
+      div.innerHTML = `
+        <label>${f.label}</label>
+        <textarea id="${f.id}" placeholder="${f.placeholder}" style="min-height:60px"></textarea>`;
+    } else {
+      div.innerHTML = `
+        <label>${f.label}${f.unit ? ' <span style="color:var(--muted2);font-weight:400;text-transform:none;letter-spacing:0">('+f.unit+')</span>' : ''}</label>
+        <div class="input-unit">
+          <input type="${f.type}" id="${f.id}" placeholder="${f.placeholder}" step="any">
+          ${f.unit ? `<span class="input-unit-label">${f.unit}</span>` : ''}
+        </div>`;
+    }
+    container.appendChild(div);
+  });
+  section.classList.add('show');
+}
+
+// ═══════════════════════════════════
+// DATETIME
+// ═══════════════════════════════════
 function setNow() {
   const now = new Date(); now.setSeconds(0,0);
   document.getElementById('f-taken').value =
@@ -600,12 +531,12 @@ function previewPhoto(input) {
   }
 }
 
-// ════════════════════════════════════
-// DROPBOX API
-// ════════════════════════════════════
+// ═══════════════════════════════════
+// DROPBOX
+// ═══════════════════════════════════
 async function dbDownload(path) {
   const r = await fetch('https://content.dropboxapi.com/2/files/download', {
-    method:'POST', headers:{ 'Authorization':'Bearer '+getToken(), 'Dropbox-API-Arg':JSON.stringify({path}) }
+    method:'POST', headers:{'Authorization':'Bearer '+getToken(),'Dropbox-API-Arg':JSON.stringify({path})}
   });
   if (r.status===409) return null;
   if (!r.ok) throw new Error('Dropbox error '+r.status);
@@ -614,7 +545,7 @@ async function dbDownload(path) {
 async function dbUploadText(path, content) {
   const r = await fetch('https://content.dropboxapi.com/2/files/upload', {
     method:'POST',
-    headers:{ 'Authorization':'Bearer '+getToken(), 'Dropbox-API-Arg':JSON.stringify({path,mode:'overwrite',autorename:false,mute:true}), 'Content-Type':'application/octet-stream' },
+    headers:{'Authorization':'Bearer '+getToken(),'Dropbox-API-Arg':JSON.stringify({path,mode:'overwrite',autorename:false,mute:true}),'Content-Type':'application/octet-stream'},
     body: content
   });
   if (!r.ok) { const e=await r.json().catch(()=>({})); throw new Error(e.error_summary||'Upload failed '+r.status); }
@@ -623,26 +554,25 @@ async function dbUploadText(path, content) {
 async function dbUploadBinary(path, blob) {
   const r = await fetch('https://content.dropboxapi.com/2/files/upload', {
     method:'POST',
-    headers:{ 'Authorization':'Bearer '+getToken(), 'Dropbox-API-Arg':JSON.stringify({path,mode:'add',autorename:true}), 'Content-Type':'application/octet-stream' },
+    headers:{'Authorization':'Bearer '+getToken(),'Dropbox-API-Arg':JSON.stringify({path,mode:'add',autorename:true}),'Content-Type':'application/octet-stream'},
     body: blob
   });
   if (!r.ok) throw new Error('Photo upload failed '+r.status);
   return r.json();
 }
 
-// ════════════════════════════════════
+// ═══════════════════════════════════
 // CSV
-// ════════════════════════════════════
-const HEADERS = ['Timestamp','Device ID','Device Name','User Name','User Email','Location','Date Taken','Expected Return','Purpose','Project Ref','Condition','Issue Description','Photo Filename','Notes'];
+// ═══════════════════════════════════
+const BASE_HEADERS = ['Timestamp','Device ID','Device Name','User Name','User Email','Location','Date Taken','Expected Return','Purpose','Project Ref','Condition','Issue Description','Photo Filename','Notes'];
 const csvCell = v => '"'+String(v??'').replace(/"/g,'""')+'"';
 const rowToCsv = row => row.map(csvCell).join(',');
+
 function parseLastRow(csv) {
   const lines=csv.trim().split('\n').filter(l=>l.trim());
   if (lines.length<2) return null;
   const cols=[]; let cur='',inQ=false;
-  for (const c of lines[lines.length-1]) {
-    if(c==='"'){inQ=!inQ;continue;} if(c===','&&!inQ){cols.push(cur);cur='';continue;} cur+=c;
-  }
+  for (const c of lines[lines.length-1]) { if(c==='"'){inQ=!inQ;continue;} if(c===','&&!inQ){cols.push(cur);cur='';continue;} cur+=c; }
   cols.push(cur);
   return {ts:cols[0],user:cols[3],location:cols[5],retDate:cols[7],condition:cols[10]};
 }
@@ -668,9 +598,9 @@ async function loadLastEntry(dev) {
   }
 }
 
-// ════════════════════════════════════
+// ═══════════════════════════════════
 // VALIDATE + SUBMIT
-// ════════════════════════════════════
+// ═══════════════════════════════════
 function validate() {
   const checks = [
     [currentDevice,                                      'Please select a device first.'],
@@ -700,6 +630,16 @@ async function submitLog() {
       : document.getElementById('f-purpose').value;
     const now = new Date().toISOString().replace('T',' ').slice(0,19);
 
+    // Collect custom field values
+    let customHeaders = [], customValues = [];
+    if (currentDevice.customFields) {
+      currentDevice.customFields.forEach(f => {
+        const el = document.getElementById(f.id);
+        customHeaders.push(f.label + (f.unit ? ' ('+f.unit+')' : ''));
+        customValues.push(el ? el.value.trim() : '');
+      });
+    }
+
     let photoFilename='';
     const photoInput=document.getElementById('f-photo');
     if (photoInput.files?.length && selectedCondition!=='All OK') {
@@ -710,6 +650,8 @@ async function submitLog() {
       photoFilename=photoPath.split('/').pop();
     }
     progress(60);
+
+    const allHeaders = [...BASE_HEADERS, ...customHeaders];
     const row=[now,currentDevice.id,currentDevice.name,
       document.getElementById('f-name').value.trim(),
       document.getElementById('f-email').value.trim(),
@@ -721,13 +663,16 @@ async function submitLog() {
       selectedCondition,
       document.getElementById('f-issue').value.trim(),
       photoFilename,
-      document.getElementById('f-notes').value.trim()
+      document.getElementById('f-notes').value.trim(),
+      ...customValues
     ];
+
     const existing=await dbDownload(currentDevice.csvFile);
-    const csv=existing?existing.trimEnd()+'\n'+rowToCsv(row)+'\n':rowToCsv(HEADERS)+'\n'+rowToCsv(row)+'\n';
+    const csv=existing?existing.trimEnd()+'\n'+rowToCsv(row)+'\n':rowToCsv(allHeaders)+'\n'+rowToCsv(row)+'\n';
     progress(80);
     await dbUploadText(currentDevice.csvFile,csv);
     progress(100);
+
     btn.innerHTML='✓ Logged Successfully'; btn.classList.add('done'); btn.disabled=false;
     toast('Entry saved to Dropbox ✓','ok');
     loadLastEntry(currentDevice);
@@ -741,6 +686,7 @@ async function submitLog() {
 function resetForm() {
   ['f-name','f-email','f-location-other','f-purpose-other','f-project','f-notes','f-issue']
     .forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  if (currentDevice?.customFields) currentDevice.customFields.forEach(f=>{const el=document.getElementById(f.id);if(el)el.value='';});
   document.getElementById('f-location').value='';
   document.getElementById('f-purpose').value='';
   document.getElementById('location-other-field').style.display='none';
