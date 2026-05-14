@@ -3,494 +3,452 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QR Codes — Lab Equipment Tracker</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<title>QR Codes — QPL Equipment Tracker</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg:      #111214;
-  --surface: #18191d;
-  --card:    #1e2026;
-  --border:  #2a2d35;
-  --accent:  #e8c84a;
-  --accent2: #4ac8e8;
-  --green:   #4ae8a0;
-  --muted:   #6b7080;
-  --text:    #eceef2;
-  --mono:    'JetBrains Mono', monospace;
-  --sans:    'Syne', sans-serif;
+  --navy:    #1a2744;
+  --navy2:   #243154;
+  --orange:  #e87c1e;
+  --orange2: #f59340;
+  --bg:      #f4f5f7;
+  --white:   #ffffff;
+  --border:  #e2e5eb;
+  --border2: #cdd1da;
+  --text:    #1a2744;
+  --muted:   #6b7a99;
+  --muted2:  #a0aec0;
+  --green:   #1a9e6b; --green-bg: #e8f7f2;
+  --sans: 'Inter', sans-serif;
+  --mono: 'DM Mono', monospace;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  -webkit-font-smoothing: antialiased;
-}
+body { background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
 
-/* ── Header ── */
-.header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 32px;
-  display: flex; align-items: center; gap: 14px;
-}
-.logo {
-  width: 38px; height: 38px;
-  background: var(--accent); border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.logo svg { width: 20px; height: 20px; }
-.header-text h1 {
-  font-family: var(--mono);
-  font-size: 14px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--accent);
-}
-.header-text p {
-  font-size: 12px; color: var(--muted);
-  font-family: var(--mono); margin-top: 2px;
-}
-.print-btn {
-  margin-left: auto;
-  padding: 9px 20px;
-  background: var(--accent);
-  border: none; border-radius: 5px;
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: #111214; cursor: pointer;
-  transition: opacity 0.15s;
-}
+/* HEADER */
+.header { background: var(--navy); padding: 0 24px; display: flex; align-items: center; gap: 14px; height: 58px; }
+.header img { height: 30px; filter: brightness(0) invert(1); opacity: 0.9; }
+.header-div { width: 1px; height: 20px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+.header-titles { flex: 1; }
+.header-titles h1 { font-size: 13px; font-weight: 700; color: #fff; }
+.header-titles p  { font-size: 11px; color: rgba(255,255,255,0.45); font-family: var(--mono); margin-top: 1px; }
+.print-btn { padding: 8px 18px; background: var(--orange); border: none; border-radius: 6px; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
 .print-btn:hover { opacity: 0.85; }
 
-/* ── URL config banner ── */
-.config-bar {
-  background: rgba(74,200,232,0.05);
-  border: 1px solid rgba(74,200,232,0.2);
-  border-left: 3px solid var(--accent2);
-  margin: 24px 32px;
-  padding: 14px 18px;
-  border-radius: 6px;
-  font-family: var(--mono); font-size: 12px;
-  color: #7ab8d0; line-height: 1.8;
-}
-.config-bar strong { color: var(--accent2); }
-.config-bar code {
-  background: rgba(255,255,255,0.06);
-  padding: 1px 6px; border-radius: 3px;
-  color: var(--accent);
-}
-.url-display {
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text);
-  font-size: 12px;
-  word-break: break-all;
-}
-.url-input-row {
-  display: flex; gap: 8px; margin-top: 10px;
-}
-.url-input-row input {
-  flex: 1;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text);
-  font-family: var(--mono); font-size: 12px;
-  padding: 7px 10px; outline: none;
-}
-.url-input-row input:focus { border-color: var(--accent2); }
-.url-input-row button {
-  padding: 7px 14px;
-  background: var(--accent2);
-  border: none; border-radius: 4px;
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  color: #0a1a20; cursor: pointer;
-}
+/* CONFIG PANEL */
+.wrap { max-width: 700px; margin: 0 auto; padding: 0 20px; }
+.config-box { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 20px 0; box-shadow: 0 1px 4px rgba(26,39,68,0.07); }
+.config-head { background: var(--navy); padding: 11px 16px; }
+.config-head span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+.config-head strong { color: var(--orange2); }
+.config-body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.cfg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media(max-width:560px){ .cfg-row { grid-template-columns: 1fr; } }
+.cfg-field label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 5px; }
+.cfg-field input { width: 100%; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 6px; color: var(--text); font-family: var(--mono); font-size: 12px; padding: 10px 12px; outline: none; transition: border-color 0.15s; -webkit-appearance: none; }
+.cfg-field input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(232,124,30,0.1); }
+.cfg-field input::placeholder { color: var(--muted2); }
+.cfg-hint { font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.6; }
+.cfg-hint a { color: var(--orange); text-decoration: none; }
+.cfg-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.gen-btn { padding: 10px 22px; background: var(--navy); border: none; border-radius: 6px; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+.gen-btn:hover { background: var(--navy2); }
+.status-pill { padding: 8px 14px; background: var(--green-bg); border-radius: 6px; font-size: 12px; color: var(--green); font-weight: 500; display: none; border: 1px solid rgba(26,158,107,0.2); }
+.status-pill.show { display: block; }
 
-/* ── QR Grid ── */
-.qr-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 0 32px 40px;
-}
+/* SECTION HEADINGS */
+.sec-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: flex; align-items: center; gap: 10px; margin: 24px 0 12px; }
+.sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
 
-.qr-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.qr-card:hover { border-color: var(--border2, #363a45); }
-.qr-card-head {
-  padding: 12px 16px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 10px;
-}
-.device-id-badge {
-  font-family: var(--mono); font-size: 10px; font-weight: 700;
-  letter-spacing: 0.1em;
-  background: var(--accent);
-  color: #111214;
-  padding: 2px 8px; border-radius: 3px;
-}
-.device-name {
-  font-size: 13px; font-weight: 600;
-  color: var(--text);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.qr-body {
-  padding: 20px;
-  display: flex; flex-direction: column; align-items: center; gap: 14px;
-}
-.qr-wrap {
-  background: white;
-  padding: 12px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-}
-.qr-url {
-  font-family: var(--mono); font-size: 9px;
-  color: var(--muted); text-align: center;
-  word-break: break-all; line-height: 1.6;
-  padding: 0 8px;
-}
-.copy-btn {
-  padding: 7px 16px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  font-family: var(--mono); font-size: 10px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--muted); cursor: pointer;
-  transition: all 0.15s;
-}
-.copy-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+/* QR GRID */
+.qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 12px; }
+.qr-grid.single { grid-template-columns: 260px; }
+
+.qr-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(26,39,68,0.07); }
+.qr-card-head { background: var(--navy); padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+.dev-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; background: var(--orange); color: #fff; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
+.dev-badge.gen { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); }
+.dev-name { font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qr-body { padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.qr-canvas-wrap { background: white; padding: 8px; border-radius: 6px; border: 1px solid var(--border); line-height: 0; }
+.qr-canvas-wrap canvas { display: block; }
+.qr-url { font-family: var(--mono); font-size: 9px; color: var(--muted2); text-align: center; word-break: break-all; line-height: 1.6; max-width: 220px; }
+.copy-btn { padding: 6px 14px; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 5px; font-family: var(--mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); cursor: pointer; transition: all 0.15s; }
+.copy-btn:hover { border-color: var(--orange); color: var(--orange); }
 .copy-btn.copied { border-color: var(--green); color: var(--green); }
+.empty-msg { font-size: 13px; color: var(--muted2); font-style: italic; padding: 20px 0; }
 
-/* ══════════════════════════════
-   SETUP GUIDE
-══════════════════════════════ */
-.guide {
-  margin: 0 32px 60px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.guide-header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 20px;
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--accent);
-  display: flex; align-items: center; gap: 8px;
-}
-.steps { padding: 0; }
-.step {
-  padding: 18px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex; gap: 16px;
-  align-items: flex-start;
-}
-.step:last-child { border-bottom: none; }
-.step-num {
-  width: 28px; height: 28px; flex-shrink: 0;
-  background: var(--accent);
-  color: #111214;
-  border-radius: 50%;
-  font-family: var(--mono); font-size: 12px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  margin-top: 1px;
-}
-.step-content h3 {
-  font-size: 14px; font-weight: 600; margin-bottom: 6px;
-  color: var(--text);
-}
-.step-content p {
-  font-size: 13px; color: var(--muted); line-height: 1.7;
-}
-.step-content code {
-  font-family: var(--mono); font-size: 12px;
-  background: var(--bg); color: var(--accent);
-  padding: 1px 6px; border-radius: 3px;
-  border: 1px solid var(--border);
-}
-.step-content ul {
-  margin: 8px 0 0 16px;
-  font-size: 13px; color: var(--muted); line-height: 2;
-}
-.step-content a { color: var(--accent2); text-decoration: none; }
-.step-content a:hover { text-decoration: underline; }
-.highlight-box {
-  margin-top: 10px;
-  padding: 10px 14px;
-  background: rgba(232,200,74,0.05);
-  border: 1px solid rgba(232,200,74,0.2);
-  border-radius: 5px;
-  font-family: var(--mono); font-size: 11px;
-  color: #b8a030; line-height: 1.8;
-}
-
-/* ══════════════════════════════
-   PRINT STYLES
-══════════════════════════════ */
+/* PRINT */
 @media print {
-  body { background: white; color: black; }
-  body::before { display: none; }
-  .header, .config-bar, .print-btn, .guide, .copy-btn { display: none !important; }
-
-  .qr-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 16px !important;
-    padding: 16px !important;
-  }
-  .qr-card {
-    background: white !important;
-    border: 1.5px solid #ccc !important;
-    border-radius: 8px !important;
-    page-break-inside: avoid;
-  }
-  .qr-card-head { background: #f4f4f4 !important; border-color: #ddd !important; }
-  .device-id-badge { background: #1a1a1a !important; color: white !important; }
-  .device-name { color: black !important; }
-  .qr-url { color: #666 !important; }
-  .qr-wrap { border: 1px solid #eee; }
+  .header, .config-box, .sec-label, .copy-btn, .print-btn { display: none !important; }
+  body { background: white; }
+  .wrap { padding: 8px; max-width: 100%; }
+  .qr-grid, .qr-grid.single { display: grid !important; grid-template-columns: repeat(2,1fr) !important; gap: 10px !important; }
+  .qr-card { border: 1.5px solid #ccc !important; box-shadow: none !important; break-inside: avoid; }
+  .qr-card-head { background: #1a2744 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .dev-badge { background: #e87c1e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 </head>
 <body>
 
 <script>
-// ── MUST MATCH index.html ──
-const CONFIG = {
-  systemName: "Lab Equipment Tracker",
-  devices: [
-    { id: "EQ-001", name: "Edward's Pumping Station", short: "Pumping Station" },
-    { id: "EQ-002", name: "Oscilloscope",             short: "Oscilloscope"    },
-    { id: "EQ-003", name: "Spectrum Analyser",        short: "Spectrum Analyser" }
-    // Add devices here to match index.html
-  ]
-};
-
-// Default base URL — user will update this after GitHub Pages deployment
-let BASE_URL = localStorage.getItem('trackerBaseUrl') || 'https://YOUR-USERNAME.github.io/YOUR-REPO';
+// ── CONFIG — keep in sync with index.html ──
+const DEVICES = [
+  { id:"EQ-001", name:"Edward's Pumping Station" },
+  { id:"EQ-002", name:"Oscilloscope"             },
+  { id:"EQ-003", name:"Spectrum Analyser"        }
+  // Add devices here to match index.html
+];
+const QPL_LOGO = "https://www.qpl-hwu.co.uk/images/QPL_logo.png";
 </script>
 
-<!-- Header -->
+<!-- HEADER -->
 <div class="header">
-  <div class="logo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#111214" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-      <rect x="3" y="14" width="7" height="7"/>
-      <path d="M14 17h3v3M17 14h3M14 14h3v3"/>
-    </svg>
-  </div>
-  <div class="header-text">
+  <img id="hdr-logo" src="" alt="QPL">
+  <div class="header-div"></div>
+  <div class="header-titles">
     <h1>QR Code Generator</h1>
-    <p>Lab Equipment Tracker — print &amp; attach to devices</p>
+    <p>QPL Equipment Tracker · Heriot-Watt</p>
   </div>
-  <button class="print-btn" onclick="window.print()">🖨 Print QR Codes</button>
+  <button class="print-btn" onclick="window.print()">🖨 Print</button>
 </div>
 
-<!-- URL Config -->
-<div class="config-bar">
-  <strong>Step 1:</strong> Enter your GitHub Pages URL below, then QR codes will update automatically.<br>
-  Format: <code>https://your-username.github.io/your-repo-name</code>
-  <div class="url-input-row">
-    <input type="text" id="base-url-input" placeholder="https://your-username.github.io/your-repo">
-    <button onclick="updateBaseUrl()">Update QR Codes</button>
-  </div>
-  <div class="url-display" id="url-preview" style="margin-top:8px"></div>
-</div>
+<div class="wrap">
 
-<!-- QR Cards -->
-<div class="qr-grid" id="qr-grid"></div>
-
-<!-- Setup Guide -->
-<div class="guide">
-  <div class="guide-header">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-    Complete Setup Guide
-  </div>
-  <div class="steps">
-
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <h3>Get your Dropbox Access Token</h3>
-        <p>Go to <a href="https://www.dropbox.com/developers/apps" target="_blank">dropbox.com/developers/apps</a></p>
-        <ul>
-          <li>Click <strong>Create app</strong></li>
-          <li>Choose <strong>Scoped access</strong> → <strong>Full Dropbox</strong></li>
-          <li>Give it any name (e.g. "Lab Tracker")</li>
-          <li>Go to <strong>Permissions</strong> tab → enable <code>files.content.write</code> and <code>files.content.read</code></li>
-          <li>Go to <strong>Settings</strong> tab → scroll to <strong>OAuth 2</strong> → click <strong>Generate access token</strong></li>
-          <li>Copy the token — it starts with <code>sl.</code></li>
-        </ul>
-        <div class="highlight-box">
-          ⚠ Keep this token private. It gives write access to your Dropbox. Do not share the HTML file publicly with the token inside it — see Step 3 for how to handle this.
+  <!-- Config -->
+  <div class="config-box">
+    <div class="config-head">
+      <span>Configure → <strong>paste your details and click Generate</strong></span>
+    </div>
+    <div class="config-body">
+      <div class="cfg-row">
+        <div class="cfg-field">
+          <label>GitHub Pages URL</label>
+          <input type="text" id="cfg-url" placeholder="https://username.github.io/lab-tracker">
+          <div class="cfg-hint">The URL where your tracker is hosted.</div>
+        </div>
+        <div class="cfg-field">
+          <label>Dropbox Token (baked into QR)</label>
+          <input type="password" id="cfg-token" placeholder="sl.B1xxxxxxxxxxxxxxxx…" autocomplete="off">
+          <div class="cfg-hint">
+            Embedded silently in QR URLs — users never see or enter it.
+            Get from <a href="https://www.dropbox.com/developers/apps" target="_blank">dropbox.com/developers/apps</a>.
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <h3>Add token to index.html</h3>
-        <p>Open <code>index.html</code> in a text editor. Find the CONFIG block near the top and replace:</p>
-        <ul>
-          <li><code>dropboxToken: "YOUR_DROPBOX_ACCESS_TOKEN_HERE"</code> → paste your token</li>
-          <li>That's it — save the file</li>
-        </ul>
+      <div class="cfg-actions">
+        <button class="gen-btn" onclick="generate()">Generate QR Codes →</button>
+        <div class="status-pill" id="status-pill">✓ Done</div>
       </div>
     </div>
-
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <h3>Host on GitHub Pages (free)</h3>
-        <p>Go to <a href="https://github.com" target="_blank">github.com</a> → create a free account if needed.</p>
-        <ul>
-          <li>Click <strong>New repository</strong> → name it (e.g. <code>lab-tracker</code>)</li>
-          <li>Set it to <strong>Private</strong> ← important for token safety</li>
-          <li>Upload both <code>index.html</code> and <code>qr-codes.html</code></li>
-          <li>Go to <strong>Settings</strong> → <strong>Pages</strong> → Source: <strong>Deploy from branch → main</strong></li>
-          <li>Wait ~1 minute → your URL appears: <code>https://username.github.io/lab-tracker</code></li>
-        </ul>
-        <div class="highlight-box">
-          ✓ Private repos on GitHub Pages are accessible by URL but not indexed — your token is protected as long as you don't share the URL widely. For extra security, consider using a Dropbox app with folder-scoped access only.
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-content">
-        <h3>Update QR codes with your URL</h3>
-        <p>Paste your GitHub Pages URL into the box at the top of this page → click <strong>Update QR Codes</strong> → the codes regenerate instantly. Then click <strong>Print QR Codes</strong>.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-content">
-        <h3>Print &amp; attach to devices</h3>
-        <p>Click the <strong>Print QR Codes</strong> button at the top. The page prints in a clean 2-column layout — cut out each label and laminate or use a label pouch. Stick to the device.</p>
-        <ul>
-          <li>QR code size is ~3×3 cm when printed — readable by any phone camera</li>
-          <li>Scanning opens the form directly in the browser — no app needed</li>
-          <li>The device name and ID auto-fill on the form</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">6</div>
-      <div class="step-content">
-        <h3>Add a new device</h3>
-        <p>Open both <code>index.html</code> and <code>qr-codes.html</code>. In each file, find the <code>devices</code> array and add one entry:</p>
-        <ul>
-          <li><code>id: "EQ-004"</code> — unique ID</li>
-          <li><code>name: "Full Device Name"</code></li>
-          <li><code>short: "Short Name"</code></li>
-          <li>In index.html only, also add: <code>csvFile: "/Lab Equipment Tracker/eq-004-name.csv"</code></li>
-        </ul>
-        <p>Save → re-upload both files to GitHub → a new QR code appears automatically on this page.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">7</div>
-      <div class="step-content">
-        <h3>View your data</h3>
-        <p>Each device has its own <code>.csv</code> file inside the <code>/Lab Equipment Tracker/</code> folder in your Dropbox. Open any of them directly in:</p>
-        <ul>
-          <li><strong>Excel</strong> — File → Open → Dropbox → select file</li>
-          <li><strong>Google Sheets</strong> — File → Import → upload the CSV</li>
-          <li><strong>Dropbox Paper</strong> — preview in browser</li>
-        </ul>
-        <p>Photos from issue reports are saved in <code>/Lab Equipment Tracker/photos/</code>.</p>
-      </div>
-    </div>
-
   </div>
+
+  <!-- General QR -->
+  <div class="sec-label">General QR Code — user selects device on form</div>
+  <div class="qr-grid single" id="general-grid">
+    <div class="empty-msg">Enter your details above and click Generate.</div>
+  </div>
+
+  <!-- Device QR codes -->
+  <div class="sec-label">Device-Specific QR Codes — device auto-selects on scan</div>
+  <div class="qr-grid" id="device-grid">
+    <div class="empty-msg">Enter your details above and click Generate.</div>
+  </div>
+
 </div>
 
+<!-- Inline QR generation — no external library needed -->
 <script>
-// ── Build QR cards ──
-function buildQRCards(baseUrl) {
-  const grid = document.getElementById('qr-grid');
-  grid.innerHTML = '';
+// ════════════════════════════════════════════════
+// MINIMAL QR CODE GENERATOR (Reed-Solomon, pure JS)
+// Based on the QR spec — no external dependency
+// ════════════════════════════════════════════════
+const QR = (() => {
+  // Reed-Solomon GF(256) tables
+  const GF_EXP = new Uint8Array(512);
+  const GF_LOG = new Uint8Array(256);
+  let x = 1;
+  for (let i = 0; i < 255; i++) {
+    GF_EXP[i] = x; GF_LOG[x] = i;
+    x <<= 1; if (x & 0x100) x ^= 0x11d;
+  }
+  for (let i = 255; i < 512; i++) GF_EXP[i] = GF_EXP[i - 255];
 
-  document.getElementById('url-preview').textContent =
-    baseUrl + '/index.html?d=EQ-001  (example)';
+  const gfMul = (a, b) => (!a || !b) ? 0 : GF_EXP[GF_LOG[a] + GF_LOG[b]];
+  const gfDiv = (a, b) => (!a) ? 0 : GF_EXP[(GF_LOG[a] + 255 - GF_LOG[b]) % 255];
 
-  CONFIG.devices.forEach(dev => {
-    const url = baseUrl + '/index.html?d=' + encodeURIComponent(dev.id);
+  function gfPolyMul(p, q) {
+    const r = new Uint8Array(p.length + q.length - 1);
+    for (let i = 0; i < p.length; i++)
+      for (let j = 0; j < q.length; j++)
+        r[i + j] ^= gfMul(p[i], q[j]);
+    return r;
+  }
 
-    const card = document.createElement('div');
-    card.className = 'qr-card';
-    card.innerHTML = `
-      <div class="qr-card-head">
-        <span class="device-id-badge">${dev.id}</span>
-        <span class="device-name">${dev.name}</span>
-      </div>
-      <div class="qr-body">
-        <div class="qr-wrap" id="qr-${dev.id}"></div>
-        <div class="qr-url">${url}</div>
-        <button class="copy-btn" id="copy-${dev.id}" onclick="copyUrl('${url}','${dev.id}')">
-          Copy URL
-        </button>
-      </div>
-    `;
-    grid.appendChild(card);
+  function gfPolyDiv(msg, gen) {
+    let r = new Uint8Array(msg);
+    for (let i = 0; i < msg.length - (gen.length - 1); i++) {
+      const c = r[i];
+      if (c !== 0)
+        for (let j = 1; j < gen.length; j++)
+          r[i + j] ^= gfMul(gen[j], c);
+    }
+    return r.slice(msg.length - (gen.length - 1));
+  }
 
-    // Generate QR code
-    new QRCode(document.getElementById('qr-' + dev.id), {
-      text: url,
-      width: 180,
-      height: 180,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  });
+  function rsGenPoly(nsym) {
+    let g = new Uint8Array([1]);
+    for (let i = 0; i < nsym; i++)
+      g = gfPolyMul(g, new Uint8Array([1, GF_EXP[i]]));
+    return g;
+  }
+
+  function rsEncodeMsg(msg, nsym) {
+    const gen = rsGenPoly(nsym);
+    const padded = new Uint8Array(msg.length + nsym);
+    padded.set(msg);
+    const rem = gfPolyDiv(padded, gen);
+    const out = new Uint8Array(msg.length + nsym);
+    out.set(msg); out.set(rem, msg.length);
+    return out;
+  }
+
+  // QR version 3, error correction M (15 EC codewords, 26 data)
+  // Enough for URLs up to ~90 bytes
+  const VERSION = 3;
+  const SIZE = 17 + VERSION * 4; // 29
+
+  function makeMatrix() { return Array.from({length:SIZE},()=>new Int8Array(SIZE).fill(-1)); }
+
+  function setFinder(m, r, c) {
+    for (let i = -1; i <= 7; i++)
+      for (let j = -1; j <= 7; j++) {
+        if (r+i<0||r+i>=SIZE||c+j<0||c+j>=SIZE) continue;
+        const inPat = i>=0&&i<=6&&j>=0&&j<=6;
+        const onEdge = (i===0||i===6||j===0||j===6)&&inPat;
+        const inCore = i>=2&&i<=4&&j>=2&&j<=4;
+        m[r+i][c+j] = (onEdge||inCore) ? 1 : 0;
+      }
+  }
+
+  function setTiming(m) {
+    for (let i = 8; i < SIZE-8; i++) {
+      m[6][i] = (i%2===0)?1:0;
+      m[i][6] = (i%2===0)?1:0;
+    }
+  }
+
+  function setAlignment(m) {
+    // Version 3 alignment at (22,22) relative to 0-indexed
+    const pos = 22;
+    for (let i = -2; i <= 2; i++)
+      for (let j = -2; j <= 2; j++) {
+        if (m[pos+i][pos+j] !== -1) continue;
+        const edge = Math.abs(i)===2||Math.abs(j)===2;
+        const core = i===0&&j===0;
+        m[pos+i][pos+j] = (edge||core)?1:0;
+      }
+  }
+
+  function setFormatBits(m, maskPat) {
+    // EC level M = 0b00, mask pattern
+    const data = (0b00 << 3) | maskPat;
+    const bch = calcFormatBCH(data);
+    const bits = ((data << 10) | bch) ^ 0b101010000010010;
+    const order = [0,1,2,3,4,5,7,8,14,13,12,11,10,9,8,7];
+    for (let i = 0; i < 6; i++) { m[8][i] = (bits>>i)&1; m[i][8] = (bits>>(14-i))&1; }
+    m[8][7]=(bits>>6)&1; m[7][8]=(bits>>6)&1;
+    m[8][8]=(bits>>7)&1;
+    for (let i=8;i<15;i++) { m[8][SIZE-15+i] = (bits>>i)&1; m[SIZE-15+i][8] = (bits>>(14-i))&1; }
+    m[SIZE-8][8] = 1; // dark module
+  }
+
+  function calcFormatBCH(data) {
+    let d = data << 10;
+    const gen = 0b10100110111;
+    for (let i = 14; i >= 10; i--)
+      if ((d >> i) & 1) d ^= gen << (i - 10);
+    return d & 0x3ff;
+  }
+
+  function placeData(m, data) {
+    let idx = 0, bit = 7;
+    let up = true;
+    for (let col = SIZE-1; col >= 0; col -= 2) {
+      if (col === 6) col--;
+      for (let ri = 0; ri < SIZE; ri++) {
+        const row = up ? SIZE-1-ri : ri;
+        for (let c = 0; c < 2; c++) {
+          const cc = col - c;
+          if (m[row][cc] === -1) {
+            const b = idx < data.length ? (data[idx]>>bit)&1 : 0;
+            m[row][cc] = b;
+            bit--;
+            if (bit < 0) { bit = 7; idx++; }
+          }
+        }
+      }
+      up = !up;
+    }
+  }
+
+  function applyMask(m, func) {
+    const out = m.map(r => new Int8Array(r));
+    for (let r = 0; r < SIZE; r++)
+      for (let c = 0; c < SIZE; c++)
+        if (out[r][c] !== -1 && func(r,c)) out[r][c] ^= 1;
+    return out;
+  }
+
+  // Encode byte-mode string
+  function encode(text) {
+    const bytes = new TextEncoder().encode(text);
+    // Build data codewords for version 3-M
+    const totalData = 26;
+    const bits = [];
+    const pushBits = (val, n) => { for(let i=n-1;i>=0;i--) bits.push((val>>i)&1); };
+    pushBits(0b0100, 4); // byte mode
+    pushBits(bytes.length, 8);
+    for (const b of bytes) pushBits(b, 8);
+    pushBits(0b0000, 4); // terminator
+    while (bits.length % 8) bits.push(0);
+    const cw = [];
+    for (let i = 0; i < bits.length; i+=8) {
+      let v=0; for(let j=0;j<8;j++) v=(v<<1)|bits[i+j]; cw.push(v);
+    }
+    const pad = [0xEC, 0x11];
+    while (cw.length < totalData) cw.push(pad[(cw.length-Math.ceil(bits.length/8))%2]);
+    // RS encode
+    const encoded = rsEncodeMsg(new Uint8Array(cw), 15);
+
+    const m = makeMatrix();
+    setFinder(m, 0, 0);
+    setFinder(m, 0, SIZE-7);
+    setFinder(m, SIZE-7, 0);
+    setTiming(m);
+    setAlignment(m);
+    // Reserve format area
+    for (let i=0;i<9;i++) { if(m[i][8]===-1)m[i][8]=0; if(m[8][i]===-1)m[8][i]=0; }
+    for (let i=SIZE-8;i<SIZE;i++) { if(m[i][8]===-1)m[i][8]=0; if(m[8][i]===-1)m[8][i]=0; }
+    placeData(m, encoded);
+    // Use mask pattern 0: (r+c)%2===0
+    const masked = applyMask(m, (r,c)=>(r+c)%2===0);
+    setFormatBits(masked, 0);
+    return masked;
+  }
+
+  function render(canvas, text, size) {
+    size = size || 200;
+    const matrix = encode(text);
+    const N = matrix.length;
+    const scale = Math.floor(size / (N + 8));
+    const margin = Math.floor((size - N * scale) / 2);
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = '#000000';
+    for (let r = 0; r < N; r++)
+      for (let c = 0; c < N; c++)
+        if (matrix[r][c] === 1)
+          ctx.fillRect(margin + c*scale, margin + r*scale, scale, scale);
+  }
+
+  return { render };
+})();
+
+// ════════════════════════════════════════════════
+// PAGE LOGIC
+// ════════════════════════════════════════════════
+document.getElementById('hdr-logo').src = QPL_LOGO;
+
+const savedUrl = localStorage.getItem('trackerBaseUrl') || 'https://muhammad-junaid-arshad.github.io/lab-tracker';
+document.getElementById('cfg-url').value = savedUrl;
+
+let currentToken = '';
+let currentBaseUrl = savedUrl;
+
+function buildURL(deviceId) {
+  let url = currentBaseUrl.replace(/\/$/, '') + '/index.html';
+  const params = [];
+  if (deviceId) params.push('d=' + encodeURIComponent(deviceId));
+  if (currentToken) params.push('t=' + encodeURIComponent(currentToken));
+  if (params.length) url += '?' + params.join('&');
+  return url;
 }
 
-function updateBaseUrl() {
-  const val = document.getElementById('base-url-input').value.trim().replace(/\/$/, '');
-  if (!val) { alert('Please enter a URL'); return; }
-  BASE_URL = val;
-  localStorage.setItem('trackerBaseUrl', val);
-  buildQRCards(BASE_URL);
+function makeCard(badgeClass, badgeText, deviceName, url, idSuffix) {
+  const card = document.createElement('div');
+  card.className = 'qr-card';
+
+  const displayUrl = currentToken
+    ? url.replace(encodeURIComponent(currentToken), currentToken.slice(0,6)+'…[token]')
+    : url;
+
+  card.innerHTML = `
+    <div class="qr-card-head">
+      <span class="dev-badge ${badgeClass}">${badgeText}</span>
+      <span class="dev-name">${deviceName}</span>
+    </div>
+    <div class="qr-body">
+      <div class="qr-canvas-wrap"><canvas id="qrc-${idSuffix}"></canvas></div>
+      <div class="qr-url">${displayUrl}</div>
+      <button class="copy-btn" id="cpbtn-${idSuffix}" onclick="copyUrl('${url}','${idSuffix}')">Copy URL</button>
+    </div>`;
+  return card;
+}
+
+function generate() {
+  const urlVal   = document.getElementById('cfg-url').value.trim().replace(/\/$/, '');
+  const tokenVal = document.getElementById('cfg-token').value.trim();
+
+  if (!urlVal) { alert('Please enter your GitHub Pages URL.'); return; }
+
+  currentBaseUrl = urlVal;
+  currentToken   = tokenVal;
+  localStorage.setItem('trackerBaseUrl', urlVal);
+
+  // General QR
+  const genGrid = document.getElementById('general-grid');
+  genGrid.innerHTML = '';
+  const genUrl = buildURL(null);
+  const genCard = makeCard('gen', 'ALL DEVICES', 'QPL Lab Equipment Tracker', genUrl, 'general');
+  genGrid.appendChild(genCard);
+  requestAnimationFrame(() => {
+    QR.render(document.getElementById('qrc-general'), genUrl, 220);
+  });
+
+  // Device QR codes
+  const devGrid = document.getElementById('device-grid');
+  devGrid.innerHTML = '';
+  DEVICES.forEach((dev, i) => {
+    const url = buildURL(dev.id);
+    const safe = 'dev' + i;
+    const card = makeCard('', dev.id, dev.name, url, safe);
+    devGrid.appendChild(card);
+    requestAnimationFrame(() => {
+      QR.render(document.getElementById('qrc-'+safe), url, 200);
+    });
+  });
+
+  const pill = document.getElementById('status-pill');
+  pill.textContent = tokenVal ? '✓ QR codes generated — token baked in' : '✓ QR codes generated (no token — users enter manually)';
+  pill.classList.add('show');
 }
 
 function copyUrl(url, id) {
   navigator.clipboard.writeText(url).then(() => {
-    const btn = document.getElementById('copy-' + id);
-    btn.textContent = '✓ Copied';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy URL'; btn.classList.remove('copied'); }, 2000);
+    const btn = document.getElementById('cpbtn-'+id);
+    if (btn) { btn.textContent='✓ Copied'; btn.classList.add('copied'); setTimeout(()=>{btn.textContent='Copy URL';btn.classList.remove('copied');},2000); }
+  }).catch(() => {
+    // Fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = url; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
   });
 }
-
-// ── Init ──
-document.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('trackerBaseUrl');
-  if (saved) document.getElementById('base-url-input').value = saved;
-  buildQRCards(BASE_URL);
-});
 </script>
 </body>
 </html>
